@@ -99,12 +99,18 @@ const Form = () => {
                     );
                   })}
                   <div className="flex items-center">
-                    <input
-                      type="text"
+                    <button
+                      className="block w-full"
                       onClick={() => handleAddValue(fieldIndex)}
-                      placeholder="Add another value"
-                      className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2 w-[500px]"
-                    />
+                    >
+                      <input
+                        type="text"
+                        placeholder="Add another value"
+                        disabled
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2 w-[500px]"
+                      />
+                    </button>
+                    <div className="ml-6">{""}</div>
                   </div>
                   <button
                     className="mt-5 bg-transparent text-black-700 font-semibold py-2 px-4 border border-black-900"
@@ -126,6 +132,36 @@ const Form = () => {
           </button>
         </div>
         <hr />
+        <table className="table-auto ml-10 h-10">
+          <thead>
+            <tr>
+              <th>Values</th>
+            </tr>
+          </thead>
+          {inputFields &&
+            inputFields.map((s, i) => {
+              return (
+                <tbody key={i}>
+                  <tr>{s.values && <td>{s.values}</td>}</tr>
+                </tbody>
+              );
+            })}
+        </table>
+        {/* {inputFields &&
+          inputFields.map((s, i) => {
+            return (
+              <table className="table-auto ml-10 h-10" key={i}>
+                <thead>
+                  <tr>
+                    <th>Values</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>{s.values && <td>{s.values}</td>}</tr>
+                </tbody>
+              </table>
+            );
+          })} */}
       </div>
     </div>
   );
