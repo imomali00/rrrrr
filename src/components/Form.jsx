@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "../App.css";
 
 const Form = () => {
-  const [inputFields, setInputFields] = useState([{ name: "", values: [] }]);
+  const [inputFields, setInputFields] = useState([{ name: "", values: [""] }]);
+  const [result, setResult] = useState([]);
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -11,7 +12,7 @@ const Form = () => {
   };
 
   const addFields = () => {
-    let newField = { name: "", values: [] };
+    let newField = { name: "", values: [""] };
     setInputFields([...inputFields, newField]);
   };
 
@@ -93,16 +94,24 @@ const Form = () => {
                   </div>
                 ))}
                 <div className="flex items-center">
-                  <input
-                    type="text"
-                    placeholder="Add another value"
+                  <button
+                    type="button"
+                    placeholder=""
                     aria-disabled
                     onClick={() => handleAddValue(fieldIndex)}
                     className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 px-2 w-[500px]"
-                  />
+                  >
+                    Add another value
+                  </button>
                   <div className="ml-6">{""}</div>
                 </div>
-                <button className="mt-5 bg-transparent text-black-700 font-semibold py-2 px-4 border border-black-900">
+                <button
+                  onClick={() => {
+                    const res = [...inputFields];
+                    setResult(() => res);
+                  }}
+                  className="mt-5 bg-transparent text-black-700 font-semibold py-2 px-4 border border-black-900"
+                >
                   Done
                 </button>
               </div>
@@ -118,17 +127,37 @@ const Form = () => {
           </button>
         </div>
         <hr />
-        <table className="table-auto ml-[50px] h-auto">
-          <h1>Variants</h1>
-          {inputFields &&
-            inputFields.map((s, i) => {
-              return (
-                <tbody key={i}>
-                  <tr className="h-12 ">{s.values && <td>{s.values}</td>}</tr>
-                </tbody>
-              );
-            })}
-        </table>
+        <div className="relative overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  Variants
+                </th>
+              </tr>
+            </thead>
+            {/* <span className="ml-[50px]">Variants</span> */}
+            {result &&
+              result.map((s, i) => {
+                return (
+                  <tbody key={i}>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {s.name}
+                      </th>
+                      <td className="px-6 py-4">
+                        {" "}
+                        {s.values && <td>{s.values.join(", ")}</td>}
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
+          </table>
+        </div>
       </div>
     </div>
   );
